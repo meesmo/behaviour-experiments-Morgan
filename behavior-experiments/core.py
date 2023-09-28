@@ -649,21 +649,26 @@ class ttl():
     self.pulse_length: float
         The length(sec) of TTL pulses.
     '''
-    def __init__(self, pin, pulse_length=0.01):
+   def __init__(self, pin, freq, train_dur=2, pulse_dur=0.005):
         self.pin = pin
-        self.pulse_length = pulse_length
+        self.opto_stim_length = pulse_dur
+        self.train_dur = train_dur
+        self.freq = freq
+        self.pulsing = False
         # Setup GPIO pins for TTL pulses.
         GPIO.setup(self.pin, GPIO.OUT)
         GPIO.output(self.pin, False)
 
-    def pulse(self):
-        '''
-        Send a TTL pulse.
-        '''
-        GPIO.output(self.pin, True)
-        time.sleep(self.pulse_length)
-        GPIO.output(self.pin, False)
+    def deliver_pulses(self):
+        
+        # Send a TTL pulse
 
+        start = time.time()
+        while time.time() < start + self.train_dur:
+            GPIO.output(self.pin, True)
+            time.sleep(self.opto_stim_length)
+            GPIO.output(self.pin, False)
+            time.sleep(1/self.freq - self.opto_stim_length)
 
 class ProbSwitchRule():
     '''

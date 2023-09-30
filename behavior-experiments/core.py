@@ -658,11 +658,9 @@ class ttl():
         # Setup GPIO pins for TTL pulses.
         GPIO.setup(self.pin, GPIO.OUT)
         GPIO.output(self.pin, False)
-
+       
+    # Send a TTL pulse
     def deliver_pulses(self):
-        
-        # Send a TTL pulse
-
         start = time.time()
         while time.time() < start + self.train_dur:
             GPIO.output(self.pin, True)

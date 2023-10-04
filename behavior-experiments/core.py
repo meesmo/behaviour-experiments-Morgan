@@ -649,7 +649,7 @@ class ttl():
     self.pulse_length: float
         The length(sec) of TTL pulses.
     '''
-   def __init__(self, pin, freq, train_dur=2, pulse_dur=0.005):
+    def __init__(self, pin, freq, train_dur=2, pulse_dur=0.005):
         self.pin = pin
         self.opto_stim_length = pulse_dur
         self.train_dur = train_dur
